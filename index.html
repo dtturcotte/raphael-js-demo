@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<title>DT Tree Traversal v.2</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+		<script src="lib/graph-raphael.js"></script>
+		<script src="lib/pie.js"></script>
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/charts.js"></script>
+		<script src="js/trees.js"></script>
+
+		<script type="text/javascript">
+			function log (w) {
+				console.log(w);
+			}
+
+			//Generate the global object
+			(function () {
+				window.GlobalObject = window.GlobalObject || {};
+			})();
+		</script>
+	</head>
+	<body>
+		<!--<iframe src="http://localhost:1337/#" id="v2vPolling" width="500" height="500"></iframe>-->
+
+		<div id="header">
+			<div id="headerCanvas"></div>
+			<div id="logo">
+				<!--<img src="resources/graphic.svg"/>-->
+			</div>
+			<span id="tryStuff">TRY STUFF</span>
+		</div><br/>
+		<div id="Comparisons">
+
+		</div>
+		<div id="Charts">
+			<!--<iframe src="survey.html" width="200px" height="200px"></iframe>-->
+			Add another sport:
+			<input type="text" id="addOption"/>
+			<button id="addMoreOptions" onclick="GlobalObject.Charts.addMoreOptions()">Add</button>
+
+			<div id="Inputs">
+				<input type="text" class="basketball" placeholder="basketball"/>
+				<input type="text" class="baseball" placeholder="baseball"/>
+				<input type="text" class="frisbee" placeholder="frisbee"/>
+			</div>
+			<button id="sendData" onclick="GlobalObject.Charts.generatePie()">Generate Chart</button>
+			<div id="chartsCanvas"></div>
+		</div>
+		<div id="TreeTraversal">
+			<div id="buttons">
+				<span id="runBFS">BFS</span> |
+				<span id="runDFS">DFS</span> |
+				<span id="createNode">Create Node</span>
+				</div><br/>
+			<div id="treeLbl">Tree <hr>
+				<div id="treeCanvas"></div>
+				</div>
+			<div id="matrixLbl">Adjacency Matrix <hr>
+				<div id="grid"></div>
+				</div>
+			<div id="dsLbl">Datastructure Output <hr>
+				<div id="myQueue"></div>
+			</div>
+		</div>
+
+	</body>
+</html>

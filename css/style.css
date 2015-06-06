@@ -1,0 +1,80 @@
+body {
+    font-family: monospace;
+    margin:0px;
+}
+
+#logo {
+    /*height: 100px;*/
+    /*background-color: gainsboro;*/
+    margin-bottom: 10px;
+}
+
+#Inputs input {
+    display: block;
+}
+
+#TreeTraversal {
+    /*background-color: gainsboro;*/
+}
+#Comparisons {
+    height: 300px;
+    background-color: gainsboro;
+}
+
+#headerCanvas {
+    /*background-color: gainsboro;*/
+}
+#treeCanvas {
+    float: left;
+    background: #4554B5;
+
+    border: 1px solid black;
+}
+#treeCanvas span {
+    background: rgba(0, 0, 0, .7);
+    transition: background-color 1s ease-in-out;
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px #888888;
+    padding: 5px;
+    width: 10px;
+    height: 10px;
+    color: white;
+    position: absolute;
+}
+
+#tree span:hover {
+    color:red;
+    cursor:pointer;
+}
+
+#buttons span{
+    padding: 10px;
+}
+
+#tryStuff:hover {
+    color: gray;
+    cursor:pointer;
+}
+
+#buttons span:hover {
+    color: gray;
+    cursor:pointer;
+}
+
+#matrixLbl, #treeLbl, #dsLbl {
+    float: left;
+    margin-left:40px;
+    margin-bottom:40px;
+}
+
+#matrixLbl div span {
+    padding: 10px;
+}
+
+#myQueue {
+    float: left;
+    margin-left: 40px;
+}
+.Acol {
+    margin-left: 8px;
+}
