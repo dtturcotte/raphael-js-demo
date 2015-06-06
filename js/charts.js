@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 			api.generatePie = function () {
 			//	this.generateChart();
+				chartsCanvas.clear();
 				var allInputs = document.getElementById("Inputs"),
 					labels = [],
 					values = [];

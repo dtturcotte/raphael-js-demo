@@ -2,17 +2,21 @@
 <html>
 	<head>
 		<title>DT Tree Traversal v.2</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
 		<script src="lib/graph-raphael.js"></script>
 		<script src="lib/pie.js"></script>
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/elements.css">
+		<script src="js/header.js"></script>
 		<script src="js/charts.js"></script>
 		<script src="js/trees.js"></script>
+		<script src="js/elements.js"></script>
 
 		<script type="text/javascript">
-			function log (w) {
+			var log = function (w) {
 				console.log(w);
-			}
+			};
 
 			//Generate the global object
 			(function () {
@@ -20,18 +24,25 @@
 			})();
 		</script>
 	</head>
-	<body>
-		<!--<iframe src="http://localhost:1337/#" id="v2vPolling" width="500" height="500"></iframe>-->
-
 		<div id="header">
 			<div id="headerCanvas"></div>
+			<h1 class="headerTitle">Raphael JS Demo</h1>
+			<p>Raphaël is a small JavaScript library that should simplify your work with vector graphics on the web. If you want to create your own specific chart or image crop and rotate widget, for example, you can achieve it simply and easily with this library.
 			<div id="logo">
 				<!--<img src="resources/graphic.svg"/>-->
 			</div>
 			<span id="tryStuff">TRY STUFF</span>
 		</div><br/>
 		<div id="Comparisons">
-
+			<div id="svgShapes">
+				<svg height="100" width="100">
+					<circle cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+				</svg>
+			</div>
+			<div id="cssShapes">
+				<div id="circle"></div>
+			</div>
+			<div id="elementsCanvas"></div>
 		</div>
 		<div id="Charts">
 			<!--<iframe src="survey.html" width="200px" height="200px"></iframe>-->

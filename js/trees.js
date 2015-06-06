@@ -9,34 +9,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		GlobalObject.TreeTraversal = (function () {
 			var api = {},
-				headerCanvas = null,
 				treeCanvas = null,
 				connect = [],
 				nodeData = null,
 				letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				nodeNameCounter = 1,
-				moveableBlock = null,
-
-				nodeShapes = {
-					"Doc": "M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z",
-					"Folder": "M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z"
-				},
-				startingShapes = [
-					"M 25 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 100 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 175 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 250 25 l 50 0 l 0 50 l -50 0 l 0 -50 z"
-				],
-				letterShapes = [
-					"M 25 75 l 0 -50 l 50 0 l 0 10 l -40 0 l 0 10 l 40 0 l 0 10 l -40 0 l 0 20 l -10 0 z",
-					"M 100 25 l 0 50 l 50 0 l 0 -50 l -10 0 l 0 40 l -30 0 l 0 -40 l -10 0 z",
-					"M 175 25 l 50 0 l 0 10 l -40 30 l 40 0 l 0 10 l -50 0 l 0 -10 l 40 -30 l -39 0 l 0 -10 z",
-					"M 250 25 l 50 0 l 0 10 l -40 30 l 40 0 l 0 10 l -50 0 l 0 -10 l 40 -30 l -39 0 l 0 -10 z"
-				],
-				shapeArray = [];
+				nodeNameCounter = 1;
 
 			api.init = function () {
-				headerCanvas = new Raphael(document.getElementById("headerCanvas"), 600, 100);
 				treeCanvas = new Raphael(document.getElementById("treeCanvas"), 500, 500);	//set global canvas object to new Raphael
 
 				this.totalNodes = 10;
@@ -64,12 +43,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					z2.attr("stroke-opacity", .08);
 				}
 
-				moveableBlock = new Logo("Logo", "M 400 25 l 50 0 l 0 50 l -50 0 l 0 -50 z", "black");
-
-				for (var i = 0; i < letterShapes.length; i++) {
-					shapeArray.push([new Logo("Logo", startingShapes[i], "black"), letterShapes[i]]);
-				}
-
 				this.nodeList.push(
 					new Node("A", treeCanvas.width / 2, 50, "black")
 				);
@@ -80,58 +53,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 				this.drawGrid(this.adjMatrix);
 
-				document.onmousedown = this.handleMouseDown;
 				document.getElementById("runBFS").addEventListener("click", this.traversal.bind(this), false);
 				document.getElementById("runDFS").addEventListener("click", this.traversal.bind(this), false);
 				document.getElementById("createNode").addEventListener("click", this.createNode.bind(this), false);
-				document.getElementById("tryStuff").addEventListener("click", this.tryStuff.bind(this), false);
-			};
-
-			var Logo = function (name, shapeCoords, color) {
-				//M: Move cursor to 250, 250 without drawing
-				//l: draw line RELATIVE to this point at 250 250... so
-				//
-				this.shape = headerCanvas.path(shapeCoords);
-				this.color = color;
-				this.path = shapeCoords;
-
-				//	this.shape.attr("fill", "#f00");
-
-				this.shape.onclick = function () {
-					alert("clicked");
-				};
-				//this.shape.attr("stroke", "#fff");
-
-			};
-
-			//set new draw path to whereever I click
-			api.handleMouseDown = function (e) {
-				//		log("mouse down");
-				//	log(e.clientX);
-				//test.shape = "M 500 25 l 50 0 l 0 50 l -50 0 l 0 -50 z";
-				moveableBlock.shape.animate({
-					path: (
-					"M " + e.clientX + " " + e.clientY + " l 50 0 l 0 50 l -50 0 l 0 -50 z"
-					)
-				}, 2000);
-			};
-
-			api.tryStuff = function () {
-				log("try stuff...");
-				for (var i = 0; i < shapeArray.length; i++) {
-					log(shapeArray[i][0]);
-					(function (i) {
-						shapeArray[i][0].shape.animate({
-							path: (
-								shapeArray[i][1]
-							)
-						}, 1000, 'backOut', function () {
-							shapeArray[i][0].shape.attr("fill", "#f00");
-							shapeArray[i][0].shape.attr("stroke", "#fff");
-						}, 3000);
-					})(i);
-				}
-
 			};
 
 			api.reset = function () {

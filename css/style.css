@@ -1,12 +1,21 @@
 body {
     font-family: monospace;
-    margin:0px;
+    /*margin:0px;*/
+}
+
+#headerCanvas {
+    width: 315px;
+    display: inline-block;
 }
 
 #logo {
     /*height: 100px;*/
     /*background-color: gainsboro;*/
     margin-bottom: 10px;
+}
+
+.headerTitle {
+    display: inline-block;
 }
 
 #Inputs input {

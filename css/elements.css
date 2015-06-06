@@ -1,0 +1,24 @@
+
+#circle {
+    width: 100px;
+    height: 100px;
+    background: red;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+#cssShapes {
+    display: inline-block;
+    width: 200px;
+}
+
+#svgShapes {
+    display: inline-block;
+    width: 200px;
+}
+
+#elementsCanvas {
+    display:inline-block;
+    width: 200px;
+}
