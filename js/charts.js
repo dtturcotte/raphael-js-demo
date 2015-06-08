@@ -12,14 +12,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 			api.init = function () {
 				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1000, 500);
-				//lineCanvas = new Raphael(document.getElementById("lineCanvas"), 1000, 500);
-				api.generatePie();
 			};
 
 			//Pathing operators: http://raphaeljs.com/reference.html#Paper.path
 
 			api.generateChart = function () {
-				log('generating chart');
 					var monthColor = [],
 					months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 					monthPath = [],
@@ -27,31 +24,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					offset = 500,
 					chartWidth= 590,
 					chartStartX = 600,
-					chartStartY = 280,
-					month = chartsCanvas.text(310+chartStartX-100, 27, months[now]).attr({
-						fill: "#fff",
+					chartStartY = 380,
+					clickerY = 108,
+					month = chartsCanvas.text(310+chartStartX-100, clickerY, months[now]).attr({
+						fill: "black",
 						stroke: "black",
-						"font": '100 18px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif'
+						"font": '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif'
 					}),
-					nextMonthClicker = chartsCanvas.circle(364+chartStartX-100, 27, 10).attr({fill: "#fff", stroke: "black"}),
-					rightArrow = chartsCanvas.path("M " + (360+chartStartX-100) + " 22 l 10 , 5 -10 , 5 z").attr({fill: "#000"}),
-					prevMonthClicker = chartsCanvas.circle(256+chartStartX-100, 27, 10).attr({fill: "#fff", stroke: "black"}),
-					leftArrow = chartsCanvas.path("M " + (260+chartStartX-100) + " 22 l -10 , 5 10 , 5 z").attr({fill: "#000"}),
+					nextMonthClicker = chartsCanvas.circle(364+chartStartX-100, clickerY, 10).attr({fill: "none", stroke: "none"}),
+					rightArrow = chartsCanvas.path("M " + (360+chartStartX-100) + " " + (clickerY-5) + " l 10 , 5 -10 , 5 z").attr({fill: "#000"}),
+					prevMonthClicker = chartsCanvas.circle(256+chartStartX-100, clickerY, 10).attr({fill: "none", stroke: "none"}),
+					leftArrow = chartsCanvas.path("M " + (260+chartStartX-100) + " " + (clickerY-5) + " l -10 , 5 10 , 5 z").attr({fill: "#000"}),
 
 					lineChart = chartsCanvas.path("M0,0").attr({fill: "none", "stroke-width": 4, "stroke-linecap": "round"}),
 					chartFill = chartsCanvas.path("M0,0").attr({stroke: "none", opacity: .3}),
 					dataPoints = [];
 
-
 				//loop through 12 months and create a new random path for each...
 				for (var monthRow = 0; monthRow < 12; monthRow++) {
-					//generate a new array of numbers (new path string) for month j
+					//generate a new array of numbers (new path string) for month monthRow
 					monthPath[monthRow] = randomPath(30, monthRow);
 					monthColor[monthRow] = Raphael.getColor(1);
 				}
 
 				//create initial line and fill for first month
-				log(monthPath[0]);
 				lineChart.attr({path: monthPath[0], stroke: monthColor[0]});
 				chartFill.attr({path: monthPath[0] + "L"+(chartWidth+chartStartX) +","+chartStartY+" " + chartStartX + "," + chartStartY + "z", fill: monthColor[0]}); //draw fill from L: width of chart (start x400+ width590) to start of chart (x=400)
 
@@ -62,29 +58,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					dataPoints[monthRow] = dataPoints[monthRow] || [];
 					for (var col = 0; col < length; col++) {
 						/*for i < 30...
-							dotsy[
-								[monthRow, col],
-								[monthRow, col]
-
-							]
-
-							aka: paths for each month
-
-							dotsy[
+						 dataPoints[
 								[monthRow]		[100, 200, 1, 45, 22, 0]
 								[monthRow+1]	[44, 24, 325, 23, 11, 88]
-
 							]
-
-
 						*/
-
-
 						//add a random Num for 0 to 200 at matrix position [j][i]
 						dataPoints[monthRow][col] = Math.round(Math.random() * 200);
-						//log(dotsy[monthRow]);
 
-						//dotsy[j] will contain an array of random numbers used to generate a path
+						//dataPoints[j] will contain an array of random numbers used to generate a path
 						//alter the path
 						if (col) {
 							x += 20; //x spacing for each data point
@@ -92,17 +74,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 							path += "," + [x, y];
 						} else {
 							//else: no path exists yet... draw first path
-
 							//start path at x,y (10, 240-path val)
 							path += "M" + [chartStartX, (y = chartStartY - dataPoints[monthRow][col])] + "R"; //R: Curve to
 						}
 					}
-					//log(path);
 					return path;
 				}
 
 				/////////////////////////////////////////
-				//ONCLICK FUNCTIONS... DYNAMICALLY GENERATE NEW GRAPH
+				//Onclick: generate new line chart
 				var animation = function () {
 					var time = 500;
 					if (now == 12) {
@@ -146,57 +126,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				document.getElementById("Inputs").appendChild(input);
 			};
 
-			api.updateChart = function () {
-				log("true");
-
-
-			};
-
 			api.generatePie = function () {
 
 				chartsCanvas.clear();
 				this.generateChart();
-				$('.basketball').bind('input', function(e) {
-					api.updateChart();
+				var allInputs = document.getElementById("Inputs");
+				labels = [];
+				values = [];
 
-				});
+				for (var i = 0; i < allInputs.children.length; i++) {
 
-				//var allInputs = document.getElementById("Inputs"),
-				//	labels = [],
-				//	values = [];
-				var values = [50, 30, 20];
-				var labels = ['test', 'test 2', 'test 3'];
+					labels.push("%%.%% - " + allInputs.children[i].className);
+					values.push(parseInt(allInputs.children[i].value));
+				}
 
-				//for (var i = 0; i < allInputs.children.length; i++) {
-				//
-				//	labels.push("%%.%% - " + allInputs.children[i].className);
-				//	values.push(parseInt(allInputs.children[i].value));
-				//}
-
-				var pie = chartsCanvas.piechart(320, 240, 100, values,
+				var pie = chartsCanvas.piechart(200, 240, 100, values,
 					{
 						legend: labels,
 						legendpos: "south",
 						href: ["http://raphaeljs.com", "http://g.raphaeljs.com"]
 					});
 
-				log(pie);
-
-
-				chartsCanvas.text(320, 100, "Favorite Sports").attr({font: "20px sans-serif"});
+				chartsCanvas.text(200, 100, "Favorite Sports").attr({font: "20px sans-serif"});
 
 				pie.hover(function () {
-					log(this.sector);
-					//this.sector.value = 100;
-					//log(this.sector.)
 					this.sector.stop();
 					this.sector.scale(1.1, 1.1, this.cx, this.cy);
-
-					//this.sector.animate({
-					//	path: (
-					//		"M 0 0 l 100 100 l 200 200"
-					//	)
-					//});
 
 					if (this.label) {
 						this.label[0].stop();

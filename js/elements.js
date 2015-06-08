@@ -12,13 +12,41 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				elementsCanvas = null;
 
 			api.init = function () {
-				elementsCanvas = new Raphael(document.getElementById("elementsCanvas"), 200, 200);
-
-
-				var circle = elementsCanvas.circle(100, 100, 80);
-				circle.attr({fill: 'red', stroke: 'black', 'stroke-width': 2});
-
+				elementsCanvas = new Raphael(document.getElementById("elementsCanvas"), 600, 100);
+				var circle = new Shape (130, 60, 32);
+				this.addClickEventForCSS();
 			};
+			//Drawing bezier/quadratic curves to: https://www.packtpub.com/books/content/paths-and-curves-raphael-js-vector-graphics
+			//Path operators: http://raphaeljs.com/reference.html#Paper.path
+			var Shape = function (x, y, r) {
+				var that = this;
+				this.set = elementsCanvas.set();
+				this.shape = elementsCanvas.circle(x, y, r);
+				this.shape.attr({
+					fill: 'blue',
+					stroke: 'blue',
+					'stroke-width': 1,
+					'fill-opacity':.5
+				});
+				this.text = elementsCanvas.text(x, y, 'RAPHAEL	');
+				this.text.attr({
+					'font-size': 13,
+					'fill': "#fff"
+				});
+
+				this.set.push(this.shape, this.text);
+
+				this.shape.node.onclick = function () {
+					that.set.animate({ cx: 450, x: 450}, 1000);
+				};
+			};
+
+			api.addClickEventForCSS = function () {
+				$('#circle').on('click', function() {
+					$(this).toggleClass('clicked');
+				});
+			};
+
 
 			return api;
 		})();

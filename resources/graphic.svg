@@ -5,13 +5,30 @@
 <g>
 	<circle fill="none" cx="-99" cy="351" r="47.5"/>
 	<circle fill="none" stroke="#00AEEF" stroke-miterlimit="10" stroke-dasharray="12.4322,12.4322" cx="-99" cy="351" r="47.5">
-		<animateTransform  type="rotate" fill="remove" calcMode="linear" additive="replace" accumulate="none" repeatCount="indefinite" dur="10s" to="360" from="0 50 50" attributeType="XML" attributeName="transform"/>
+	
+		<animateTransform  attributeName="transform"
+		    attributeType="XML"
+		    type="rotate"
+		    from="0 -99 351"
+		    to="360 -99 351"
+		    dur="10s"
+		    begin="1s"
+		    repeatCount="indefinite" />
+
+
 	</circle>
 </g>
 <g>
 	<circle fill="none" cx="-99" cy="351" r="36.5"/>
 	<circle fill="none" stroke="#ED1C24" stroke-miterlimit="10" stroke-dasharray="11.4638,11.4638" cx="-99" cy="351" r="36.5">
-		<animateTransform  type="rotate" fill="remove" calcMode="linear" additive="replace" accumulate="none" repeatCount="indefinite" dur="10s" to="360 50 50" from="0 50 50" attributeType="XML" attributeName="transform"/>
+        <animateTransform  attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="0 -99 351"
+            to="360 -99 351"
+            dur="10s"
+            begin="1s"
+            repeatCount="indefinite" />
 	</circle>
 </g>
 </svg>

@@ -1,24 +1,81 @@
 
 #circle {
-    width: 100px;
-    height: 100px;
-    background: red;
+    width: 62px;
+    height: 62px;
+    margin-left: 100px;
+    background-color: rgba(155, 0, 10, .5);
+    text-align: center;
+    vertical-align: text-bottom;
+    color: white;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
     border-radius: 50px;
+    -webkit-transition: 2s;
+    line-height: 60px;
+    border: 1px solid red;
+}
+/*@-webkit-keyframes myCSSAnimation{*/
+    /*0%{margin-left:100px}*/
+    /*100%{margin-left:500px}*/
+
+/*}*/
+
+/*#circle:active {*/
+    /*-webkit-transform: translate(400px,100px);*/
+/*}*/
+
+.clicked {
+    /*-webkit-animation: myCSSAnimation 2s;*/
+    -webkit-transform: translate(320px);
+}
+
+#pageEl {
+    width: 50px;
+    height: 50px;
+    border: 1px solid red;
+    background-color: rgba(155, 0, 10, .5);
+    -webkit-transition: 2s;
+    margin: 10px;
+}
+#pageEl:hover {
+    -webkit-transform: rotateY( 180deg );
 }
 
 #cssShapes {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 200px;
 }
 
 #svgShapes {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 200px;
 }
 
 #elementsCanvas {
-    display:inline-block;
-    width: 200px;
+    /*display:inline-block;*/
+    width: 600px;
+    height: 100px;
+}
+
+#Comparisons {
+    height: 400px;
+    width: 100%;
+    background-color: gainsboro;
+    padding-top:1px;
+    padding-left:10px;
+    margin-top: -18px;
+
+}
+#Charts {
+    background: rgb(67,67,120);
+    padding-top:1px;
+    padding-left:10px;
+    width:100%;
+    color: white;
+}
+#Trees {
+    padding-top:1px;
+    padding-left:10px;
+    width:100%;
+    color: black;
 }

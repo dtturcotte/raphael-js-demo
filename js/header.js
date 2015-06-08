@@ -10,15 +10,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			var api = {},
 				headerCanvas = null,
 				moveableBlock = null,
-				nodeShapes = {
-					"Doc": "M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z",
-					"Folder": "M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z"
-				},
+
 				startingShapes = [
 					"M 25 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 100 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 175 25 l 50 0 l 0 50 l -50 0 l 0 -50 z",
-					"M 250 25 l 50 0 l 0 50 l -50 0 l 0 -50 z"
+					"M 125 25 l 30 50 l -60 0 z",
+					"M 175 25 l 30 0 l 0 25 l 30 0 l 0 25 l -50 0 l 0 -25 l -25 0 l 0 -25 z",
+					"M 300 25 Q 225,50 ,270,75 l 30 0 q -20,-30 , 30, -20 z"
 				],
 				letterShapes = [
 					"M 25 75 l 0 -50 l 50 0 l 0 10 l -40 0 l 0 10 l 40 0 l 0 10 l -40 0 l 0 20 l -10 0 z",
@@ -37,20 +34,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					shapeArray.push([new Logo("Logo", startingShapes[i], "black"), letterShapes[i]]);
 				}
 
-				document.getElementById("tryStuff").addEventListener("click", this.tryStuff.bind(this), false);
-				document.onmousedown = this.handleMouseDown;
+				document.getElementById("headerCanvas").addEventListener("click", this.tryStuff.bind(this), false);
+			//	document.onmousedown = this.handleMouseDown;
 			};
 			//set new draw path to whereever I click
-			api.handleMouseDown = function (e) {
-				//		log("mouse down");
-				//	log(e.clientX);
-				//test.shape = "M 500 25 l 50 0 l 0 50 l -50 0 l 0 -50 z";
-				moveableBlock.shape.animate({
-					path: (
-					"M " + e.clientX + " " + e.clientY + " l 50 0 l 0 50 l -50 0 l 0 -50 z"
-					)
-				}, 2000);
-			};
+			//api.handleMouseDown = function (e) {
+			//	//		log("mouse down");
+			//	//	log(e.clientX);
+			//	//test.shape = "M 500 25 l 50 0 l 0 50 l -50 0 l 0 -50 z";
+			//	moveableBlock.shape.animate({
+			//		path: (
+			//		"M " + e.clientX + " " + e.clientY + " l 50 0 l 0 50 l -50 0 l 0 -50 z"
+			//		)
+			//	}, 2000);
+			//};
 
 			api.tryStuff = function () {
 				for (var i = 0; i < shapeArray.length; i++) {
@@ -73,6 +70,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				//l: draw line RELATIVE to this point at 250 250... so
 				//
 				this.shape = headerCanvas.path(shapeCoords);
+
+				this.shape.attr({
+					fill: 'blue',
+					stroke: 'blue',
+					'stroke-width': 1,
+					'fill-opacity':.5
+				});
 				this.color = color;
 				this.path = shapeCoords;
 
