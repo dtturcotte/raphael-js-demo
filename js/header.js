@@ -35,19 +35,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}
 
 				document.getElementById("headerCanvas").addEventListener("click", this.tryStuff.bind(this), false);
-			//	document.onmousedown = this.handleMouseDown;
 			};
-			//set new draw path to whereever I click
-			//api.handleMouseDown = function (e) {
-			//	//		log("mouse down");
-			//	//	log(e.clientX);
-			//	//test.shape = "M 500 25 l 50 0 l 0 50 l -50 0 l 0 -50 z";
-			//	moveableBlock.shape.animate({
-			//		path: (
-			//		"M " + e.clientX + " " + e.clientY + " l 50 0 l 0 50 l -50 0 l 0 -50 z"
-			//		)
-			//	}, 2000);
-			//};
 
 			api.tryStuff = function () {
 				for (var i = 0; i < shapeArray.length; i++) {
@@ -66,9 +54,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			};
 
 			var Logo = function (name, shapeCoords, color) {
-				//M: Move cursor to 250, 250 without drawing
-				//l: draw line RELATIVE to this point at 250 250... so
-				//
 				this.shape = headerCanvas.path(shapeCoords);
 
 				this.shape.attr({
@@ -79,14 +64,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				});
 				this.color = color;
 				this.path = shapeCoords;
-
-				//	this.shape.attr("fill", "#f00");
-
 				this.shape.onclick = function () {
 					alert("clicked");
 				};
-				//this.shape.attr("stroke", "#fff");
-
 			};
 
 			return api;

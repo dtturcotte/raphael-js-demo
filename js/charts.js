@@ -14,14 +14,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1000, 500);
 			};
 
-			//Pathing operators: http://raphaeljs.com/reference.html#Paper.path
-
 			api.generateChart = function () {
 					var monthColor = [],
 					months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 					monthPath = [],
 					now = 0,
-					offset = 500,
 					chartWidth= 590,
 					chartStartX = 600,
 					chartStartY = 380,
@@ -40,9 +37,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					chartFill = chartsCanvas.path("M0,0").attr({stroke: "none", opacity: .3}),
 					dataPoints = [];
 
-				//loop through 12 months and create a new random path for each...
+				//loop through 12 months and create a new random path for each:
 				for (var monthRow = 0; monthRow < 12; monthRow++) {
-					//generate a new array of numbers (new path string) for month monthRow
 					monthPath[monthRow] = randomPath(30, monthRow);
 					monthColor[monthRow] = Raphael.getColor(1);
 				}
@@ -57,31 +53,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						y = 0;
 					dataPoints[monthRow] = dataPoints[monthRow] || [];
 					for (var col = 0; col < length; col++) {
-						/*for i < 30...
-						 dataPoints[
-								[monthRow]		[100, 200, 1, 45, 22, 0]
-								[monthRow+1]	[44, 24, 325, 23, 11, 88]
-							]
-						*/
-						//add a random Num for 0 to 200 at matrix position [j][i]
 						dataPoints[monthRow][col] = Math.round(Math.random() * 200);
 
-						//dataPoints[j] will contain an array of random numbers used to generate a path
-						//alter the path
 						if (col) {
-							x += 20; //x spacing for each data point
-							y = chartStartY - dataPoints[monthRow][col]; //put starting y position at 240 down... then subtract path value from it (make path rise up)
+							x += 20;
+							y = chartStartY - dataPoints[monthRow][col];
 							path += "," + [x, y];
 						} else {
-							//else: no path exists yet... draw first path
-							//start path at x,y (10, 240-path val)
-							path += "M" + [chartStartX, (y = chartStartY - dataPoints[monthRow][col])] + "R"; //R: Curve to
+							path += "M" + [chartStartX, (y = chartStartY - dataPoints[monthRow][col])] + "R";
 						}
 					}
 					return path;
 				}
 
-				/////////////////////////////////////////
 				//Onclick: generate new line chart
 				var animation = function () {
 					var time = 500;

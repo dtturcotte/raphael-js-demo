@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				var circle = new Shape (130, 60, 32);
 				this.addClickEventForCSS();
 			};
-			//Drawing bezier/quadratic curves to: https://www.packtpub.com/books/content/paths-and-curves-raphael-js-vector-graphics
-			//Path operators: http://raphaeljs.com/reference.html#Paper.path
+
 			var Shape = function (x, y, r) {
 				var that = this;
 				this.set = elementsCanvas.set();
@@ -46,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					$(this).toggleClass('clicked');
 				});
 			};
-
 
 			return api;
 		})();

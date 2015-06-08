@@ -14,18 +14,8 @@
     line-height: 60px;
     border: 1px solid red;
 }
-/*@-webkit-keyframes myCSSAnimation{*/
-    /*0%{margin-left:100px}*/
-    /*100%{margin-left:500px}*/
-
-/*}*/
-
-/*#circle:active {*/
-    /*-webkit-transform: translate(400px,100px);*/
-/*}*/
 
 .clicked {
-    /*-webkit-animation: myCSSAnimation 2s;*/
     -webkit-transform: translate(320px);
 }
 
@@ -37,22 +27,20 @@
     -webkit-transition: 2s;
     margin: 10px;
 }
+
 #pageEl:hover {
     -webkit-transform: rotateY( 180deg );
 }
 
 #cssShapes {
-    /*display: inline-block;*/
     width: 200px;
 }
 
 #svgShapes {
-    /*display: inline-block;*/
     width: 200px;
 }
 
 #elementsCanvas {
-    /*display:inline-block;*/
     width: 600px;
     height: 100px;
 }
@@ -64,8 +52,8 @@
     padding-top:1px;
     padding-left:10px;
     margin-top: -18px;
-
 }
+
 #Charts {
     background: rgb(67,67,120);
     padding-top:1px;
@@ -73,6 +61,7 @@
     width:100%;
     color: white;
 }
+
 #Trees {
     padding-top:1px;
     padding-left:10px;

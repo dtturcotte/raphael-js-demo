@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				nodeNameCounter = 1;
 
 			api.init = function () {
-				treeCanvas = new Raphael(document.getElementById("treeCanvas"), 500, 500);	//set global canvas object to new Raphael
+				treeCanvas = new Raphael(document.getElementById("treeCanvas"), 500, 500);
 
 				this.totalNodes = 10;
 				this.nodeList = [];
@@ -419,7 +419,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			var Node = function (name, x, y, color) {
 				this.set = treeCanvas.set();
 				this.shape = treeCanvas.circle(x, y, 10);
-				//this.shape = canvas.path("M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z");
 				this.path = null;
 
 				treeCanvas.setStart();
@@ -456,10 +455,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					myChildren.push(node);
 				};
 
-				this.hasChildren = function () {
-					return myChildren.length == 0;
-				};
-
 				this.color = color;
 				this.shape.attr("fill", "#acff66");
 				this.shape.attr("fill-opacity", .4);
@@ -472,7 +467,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				this.set[0].node.onclick = function () {
 					connect.push(that);
 					that.shape.attr("stroke-width", 3);
-//								that.shape.attr("stroke", "black");
 					GlobalObject.TreeTraversal.addChild();
 				};
 
@@ -497,7 +491,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 			};
 
-			return api; //return api as an object full of members, then you can access its members
+			return api;
 		})();
 
 	})();

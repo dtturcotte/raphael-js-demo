@@ -1,7 +1,6 @@
 body {
     font-family: monospace;
     font-family: 'Ubuntu', sans-serif;
-    /*margin:0px;*/
     margin: 0px;
     padding: 0px;
 }
@@ -43,8 +42,6 @@ button:hover {
 }
 
 #logo {
-    /*height: 100px;*/
-    /*background-color: gainsboro;*/
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -72,14 +69,6 @@ h3 {
 
 #Inputs input {
     display: block;
-}
-
-#TreeTraversal {
-    /*background-color: gainsboro;*/
-}
-
-#headerCanvas {
-    /*background-color: gainsboro;*/
 }
 #treeCanvas {
     float: left;
