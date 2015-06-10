@@ -9,13 +9,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		GlobalObject.Charts = (function () {
 			var api = {},
 				chartsCanvas = null,
-				barValues = [],
-				voteCounter = 0,
 				allSports = [],
-				initialBarValues = true;
+				initialBarValues = true,
+				barTextObjects = [];
 
 			api.init = function () {
-				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1000, 500);
+				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1500, 500);
 			};
 
 			api.generateChart = function () {
@@ -24,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					monthPath = [],
 					now = 0,
 					chartWidth= 590,
-					chartStartX = 600,
-					chartStartY = 380,
+					chartStartX = 750,
+					chartStartY = 355,
 					clickerY = 108,
 					month = chartsCanvas.text(310+chartStartX-100, clickerY, months[now]).attr({
 						fill: "black",
@@ -99,55 +98,50 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				rightArrow.click(next);
 				prevMonthClicker.click(prev);
 				leftArrow.click(prev);
-
 			};
 
 			api.addMoreOptions = function () {
 				var choice = document.getElementById("addOption").value;
-				log("choice: " + choice);
-
 				var input = document.createElement("input");
 				input.type = "text";
 				input.className = choice;
 				input.name = choice;
 				input.placeholder=choice;
 				document.getElementById("Inputs").appendChild(input);
-
-				//need to create new array of values for the bar chart...
+				allSports = [];
+				initialBarValues = true;
 			};
 
 			api.generateBar = function (allSportsMatrix, labels) {
-				fin = function () {
-					this.flag = chartsCanvas.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
-				},
-				fout = function () {
-					this.flag.animate({opacity: 0}, 300, function () {this.remove();});
-				},
-				fin2 = function () {
-					var y = [], res = [];
+				mouseoverFlag = function () {
+					log(this.bars);
+					var yArray = [], res = [];
 					for (var i = this.bars.length; i--;) {
-						y.push(this.bars[i].y);
+						yArray.push(this.bars[i].y);
 						res.push(this.bars[i].value || "0");
 					}
-					this.flag = chartsCanvas.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).insertBefore(this);
-				},
-				fout2 = function () {
+					//Math.min.apply()
+					this.flag = chartsCanvas.popup(this.bars[0].x, Math.min.apply(Math, yArray), res.join(", ")).insertBefore(this);
+				//	this.flag2 = chartsCanvas.popup(this.bars[0].x, Math.min.apply(Math, yArray), "Hello").insertBefore(this);
+
+				};
+				mouseoutFlag = function () {
 					this.flag.animate({opacity: 0}, 300, function () {this.remove();});
-				},
-				txtattr = { font: "12px sans-serif" };
-
-				chartsCanvas.text(480, 250, "Multiline Series Stacked Chart\nColumn Hover").attr(txtattr);
-
-				log(allSportsMatrix);
-
-				var c = chartsCanvas.barchart(330, 250, 300, 220, [
-						//all votes over time
-						allSportsMatrix[0],	//Basketball votes
-						allSportsMatrix[1],	//Softball votes
-						allSportsMatrix[2]	//Frisbee votes
-					],
-					{stacked: true, type: "soft"}
-				).hoverColumn(fin2, fout2);
+				//	this.flag2.animate({opacity: 0}, 300, function () {this.remove();});
+				};
+				txtattr = { font: "20px sans-serif" };
+				chartsCanvas.text(480, 100, "Sports Bar").attr(txtattr);
+				var bottomLabel = chartsCanvas.text(480, 400, "Voting round " + allSportsMatrix[0].length).attr({ font: "12px sans-serif" });
+				barTextObjects.push(bottomLabel);
+				var c = chartsCanvas.barchart(330, 150, 300, 220,
+					allSportsMatrix,
+					{
+						stacked: true,
+						gutter: "30%",
+						type: "soft",
+						legend: labels
+					}
+				).hoverColumn(mouseoverFlag, mouseoutFlag);
 			};
 
 			api.generateCharts = function () {
@@ -175,15 +169,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					labels.push("%%.%% - " + allInputs.children[row].className);
 				}
 				initialBarValues = false;
-				//log(allSports);
-				//log(values);
 				this.generateBar(allSports, labels);
 				this.generatePie(values, labels);
 				this.generateChart();
 			};
 
 			api.generatePie = function (values, labels) {
-				log(values);
 				var pie = chartsCanvas.piechart(200, 240, 100, values,
 					{
 						legend: labels,
