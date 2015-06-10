@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				chartsCanvas = null,
 				barValues = [],
 				voteCounter = 0,
-				allSports = [];
+				allSports = [],
+				initialBarValues = true;
 
 			api.init = function () {
 				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1000, 500);
@@ -115,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				//need to create new array of values for the bar chart...
 			};
 
-			api.generateBar = function (values, labels) {
+			api.generateBar = function (allSportsMatrix, labels) {
 				fin = function () {
 					this.flag = chartsCanvas.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
 				},
@@ -137,17 +138,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 				chartsCanvas.text(480, 250, "Multiline Series Stacked Chart\nColumn Hover").attr(txtattr);
 
-				log(values);
-				barValues.push(values);
-				log(barValues[0][0]); //array[0] (round 1 voting), [0] first num casted (for basketball)
-
-
+				log(allSportsMatrix);
 
 				var c = chartsCanvas.barchart(330, 250, 300, 220, [
 						//all votes over time
-						[34, 44],	//Basketball votes
-						[56, 33],	//Softball votes
-						[67, 23]	//Frisbee votes
+						allSportsMatrix[0],	//Basketball votes
+						allSportsMatrix[1],	//Softball votes
+						allSportsMatrix[2]	//Frisbee votes
 					],
 					{stacked: true, type: "soft"}
 				).hoverColumn(fin2, fout2);
@@ -158,30 +155,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				var allInputs = document.getElementById("Inputs"),
 					labels = [],
 					values = [];
-
-				for (var i = 0; i < allInputs.children.length; i++) {
-					labels.push("%%.%% - " + allInputs.children[i].className);
-					values.push(parseInt(allInputs.children[i].value));
-
-					allSports.push(values);
+				/*
+				 - allSports[0]: [23, ...]	basketball
+				 - allSports[1]: [34, ...]	baseball
+				 - allSports[2]: [44, ...]	frisbee
+				 */
+				for (var row = 0; row < allInputs.children.length; row++) {
+					//create an initial array for each sport
+					if (initialBarValues) {
+						values.push(parseInt(allInputs.children[row].value));
+						allSports.push([parseInt(allInputs.children[row].value)]);
+					}
+					//do not need to create new arrays... just push next set of values into matrix
+					else {
+						var col = allSports[allInputs.children.length-1].length;
+						values.push(parseInt(allInputs.children[row].value));
+						allSports[row][col] = parseInt(allInputs.children[row].value);
+					}
+					labels.push("%%.%% - " + allInputs.children[row].className);
 				}
-
-				/* Values:
-				* basketball, softball, frisbee
-				* 34, 			55, 		85
-				* 65,			43,			23
-				*
-				*
-				* */
-				this.generateBar(values, labels);
-
-
+				initialBarValues = false;
+				//log(allSports);
+				//log(values);
+				this.generateBar(allSports, labels);
 				this.generatePie(values, labels);
 				this.generateChart();
-
 			};
 
 			api.generatePie = function (values, labels) {
+				log(values);
 				var pie = chartsCanvas.piechart(200, 240, 100, values,
 					{
 						legend: labels,
