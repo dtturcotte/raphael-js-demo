@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		GlobalObject.Charts = (function () {
 			var api = {},
-				chartsCanvas = null;
+				chartsCanvas = null,
+				barValues = [],
+				voteCounter = 0,
+				allSports = [];
 
 			api.init = function () {
 				chartsCanvas = new Raphael(document.getElementById("chartsCanvas"), 1000, 500);
@@ -108,22 +111,77 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				input.name = choice;
 				input.placeholder=choice;
 				document.getElementById("Inputs").appendChild(input);
+
+				//need to create new array of values for the bar chart...
 			};
 
-			api.generatePie = function () {
+			api.generateBar = function (values, labels) {
+				fin = function () {
+					this.flag = chartsCanvas.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
+				},
+				fout = function () {
+					this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+				},
+				fin2 = function () {
+					var y = [], res = [];
+					for (var i = this.bars.length; i--;) {
+						y.push(this.bars[i].y);
+						res.push(this.bars[i].value || "0");
+					}
+					this.flag = chartsCanvas.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).insertBefore(this);
+				},
+				fout2 = function () {
+					this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+				},
+				txtattr = { font: "12px sans-serif" };
 
+				chartsCanvas.text(480, 250, "Multiline Series Stacked Chart\nColumn Hover").attr(txtattr);
+
+				log(values);
+				barValues.push(values);
+				log(barValues[0][0]); //array[0] (round 1 voting), [0] first num casted (for basketball)
+
+
+
+				var c = chartsCanvas.barchart(330, 250, 300, 220, [
+						//all votes over time
+						[34, 44],	//Basketball votes
+						[56, 33],	//Softball votes
+						[67, 23]	//Frisbee votes
+					],
+					{stacked: true, type: "soft"}
+				).hoverColumn(fin2, fout2);
+			};
+
+			api.generateCharts = function () {
 				chartsCanvas.clear();
-				this.generateChart();
-				var allInputs = document.getElementById("Inputs");
-				labels = [];
-				values = [];
+				var allInputs = document.getElementById("Inputs"),
+					labels = [],
+					values = [];
 
 				for (var i = 0; i < allInputs.children.length; i++) {
-
 					labels.push("%%.%% - " + allInputs.children[i].className);
 					values.push(parseInt(allInputs.children[i].value));
+
+					allSports.push(values);
 				}
 
+				/* Values:
+				* basketball, softball, frisbee
+				* 34, 			55, 		85
+				* 65,			43,			23
+				*
+				*
+				* */
+				this.generateBar(values, labels);
+
+
+				this.generatePie(values, labels);
+				this.generateChart();
+
+			};
+
+			api.generatePie = function (values, labels) {
 				var pie = chartsCanvas.piechart(200, 240, 100, values,
 					{
 						legend: labels,
